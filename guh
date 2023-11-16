@@ -1,0 +1,167 @@
+#include<iostream>
+using namespace std;
+
+string inventory[10];
+int gold = 100;
+int affinity = 0;
+bool pr1 = false;
+bool pr2 = false;
+bool pr3 = false;
+bool pr4 = false;
+void itemDropper();
+void Shop();
+
+int main() {
+	cout << "your inventory:" << endl;
+	for (int i = 0; i < 10; i++)
+		inventory[i] = " ";
+
+	cout << "welcome to the text based game" << endl;
+
+	char input = 'a';
+	int room = 1;
+	
+	while (input != 'q') {
+		for (int i = 0; i < 10; i++)
+			cout << inventory[i] << " ";
+		cout << endl;
+
+		switch (room) {
+		case 1:
+			cout << "you're in room 1, you can go (s)outh." << endl;
+			if (inventory[0] != "key")
+				cout << "you can see a shiny (k)ey on the ground." << endl;
+			if (pr1 == false)
+				cout << "you can (p)et your cat" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 2;
+			if (input == 'k') {
+				cout << "you got the shiny key!" << endl;
+				inventory[0] = "key3";
+			}
+			if (input == 'p') {
+				affinity += 10;
+				cout << "You pet the cat!!! you have" << affinity << "affinity!!!" << endl;
+				pr1 = true;
+			}
+			break;
+		case 2:
+
+			cout << "you're in room 2, you can go (n)orth or (s)outh" << endl;
+			if (pr2 == false)
+				cout << "you can (p)et your cat" << endl;
+			cin >> input;
+			if (input == 'n')
+				room = 1;
+			if (input == 's')
+				if (inventory[0] == "key3") {
+					room = 3;
+					cout << "you unlock the door with the key!" << endl;
+				}
+			if (input == 'p') {
+				affinity += 10;
+				cout << "You pet the cat!!! you have" << affinity << "affinity!!!" << endl;
+				pr2 = true;
+			}
+			break;
+		case 3:
+			cout << "you're in room 3, you can go (n)orth or (s)outh" << endl;
+			cout << "there's a cardboard box in the middle of the room: (o)pen" << endl;
+			if (pr3 == false)
+				cout << "you can (p)et your cat" << endl;
+			cin >> input;
+			if (input == 'n')
+				room = 2;
+			if (input == 's')
+				room = 4;
+			if (input == 'o')
+				itemDropper();
+			if (input == 'p') {
+				affinity += 10;
+				cout << "You pet the cat!!! you have " << affinity << " affinity!!!" << endl;
+				pr3 = true;
+			}
+			break;
+		case 4:
+			cout << "you're in room 4, you can go (n)orth" << endl;
+			cout << "there's a (s)hop here" << endl;
+			if (pr4 == false)
+				cout << "you can (p)et your cat" << endl;
+
+			cin >> input;
+			if (input == 'n')
+				room = 2;
+			if (input == 's')
+				Shop();
+			if (input == 'p') {
+				affinity += 10;
+				cout << "You pet the cat!!! you have " << affinity << " affinity!!!" << endl;
+				pr4 = true;
+			}
+			break;
+
+		}//end of switch
+	}//game loop
+} //end of main
+
+	void itemDropper() {
+	int num = rand() % 100;
+	if (num < 25) {
+		cout << "you got a sock!" << endl;
+		inventory[1] = "sock";
+	}
+	else if (num < 50) {
+		cout << "you got a handful of legos!" << endl;
+		inventory[2] = "legos";
+	}
+	else if (num < 60) {
+		cout << "you got a live chicken" << endl;
+		inventory[3] = "chicken";
+
+	}
+	else {
+		cout << "you didn't get anything" << endl;
+	}
+}
+
+void Shop() {
+	int input = 23453245;
+	while (input != 0) {
+		cout << "welcome to the shop!" << endl;
+		cout << "you have " << gold << " gold" << endl;
+		cout << "1) Knife: 20" << endl;
+		cout << "2) Potion: 10" << endl;
+		cout << "3) Leather Armor: 50" << endl;
+		cout << "Press 0 to Leave" << endl;
+		cin >> input;
+		if (input == 1) {
+			if (gold >= 20) {
+				cout << "You Bought A Knife" << endl;
+				inventory[3] = "Knife";
+				gold -= 20;
+			}
+			else
+				cout << "sorry, you don't have enough gold" << endl;
+		}
+		if (input == 2) {
+			if (gold >= 10) {
+				cout << "You Bought A Potion" << endl;
+				inventory[4] = "Potion";
+				gold -= 10;
+			}
+			else
+				cout << "sorry, you don't have enough gold" << endl;
+
+		}
+		if (input == 3) {
+			if (gold >= 50) {
+				cout << "You Bought Leather Armor" << endl;
+				inventory[5] = "Armor";
+				gold -= 50;
+			}
+			else
+				cout << "sorry, you don't have enough gold" << endl;
+		}
+	}
+}
